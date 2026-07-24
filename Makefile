@@ -1,5 +1,6 @@
-lint:
-	vendor/bin/phpcs --standard=psr2 src/
+test:
+	vendor/bin/phpstan analyse --level 9 src tests
+	vendor/bin/phpunit tests
 
-test: lint
-	vendor/bin/phpunit
+style:
+	vendor/bin/php-cs-fixer fix

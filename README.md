@@ -15,24 +15,36 @@ composer require compwright/oauth2-fieldedge league/oauth2-client
 
 ## Usage
 
-Usage is the same as The League's OAuth client, using `\Compwright\OAuth2_Fieldedge\Provider` as the provider.
+Usage is the same as The League's OAuth client, using `\Compwright\OAuth2\FieldEdge\ProviderFactory` to create the provider instance.
 
 ### Example: Client Credentials Flow
 
 ```php
-$provider = new Compwright\OAuth2_Fieldedge\Provider([
-    'clientId'      => '{fieldedge-client-id}',
-    'clientSecret'  => '{fieldedge-api-key}',
-]);
+$provider = new Compwright\OAuth2\FieldEdge\ProviderFactory()->new(
+    clientId: '{fieldedge-client-id}',
+    clientSecret: '{fieldedge-client-secret}',
+);
+
+// Get an access token
+$token = $provider->getAccessToken('client_credentials', ['target_id' => 'my_target_id']);
+
+// Use the token to interact with an API on the users behalf
+echo $token->getToken();
+```
+
+### Example: Client Credentials Flow (Legacy Partner API)
+
+```php
+$provider = new Compwright\OAuth2\FieldEdge\ProviderFactory()->newLegacy(
+    clientId: '{fieldedge-client-id}',
+    apiKey: '{fieldedge-api-key}',
+);
 
 // Get an access token
 $token = $provider->getAccessToken('client_credentials');
 
 // Use the token to interact with an API on the users behalf
 echo $token->getToken();
-
-// The token is really a JWT, getResourceOwnerId() extracts the company_id claim
-echo $token->getResourceOwnerId();
 ```
 
 ## Testing
@@ -44,13 +56,6 @@ $ make test
 ## Contributing
 
 Please see [CONTRIBUTING](https://github.com/compwright/oauth2-fieldedge/blob/master/CONTRIBUTING.md) for details.
-
-
-## Credits
-
-- [Jonathon Hill](https://github.com/compwright)
-- [All Contributors](https://github.com/compwright/oauth2-fieldedge/contributors)
-
 
 ## License
 
