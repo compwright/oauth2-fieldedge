@@ -1,5 +1,6 @@
 # FieldEdge Provider for OAuth 2.0 Client
 
+[![Build Status](https://github.com/compwright/oauth2-fieldedge/actions/workflows/php.yml/badge.svg)](https://github.com/compwright/oauth2-fieldedge/actions/workflows/php.yml)
 [![Latest Version](https://img.shields.io/github/release/compwright/oauth2-fieldedge.svg?style=flat-square)](https://github.com/compwright/oauth2-fieldedge/releases)
 [![Total Downloads](https://img.shields.io/packagist/dt/compwright/oauth2-fieldedge.svg?style=flat-square)](https://packagist.org/packages/compwright/oauth2-fieldedge)
 
@@ -32,26 +33,15 @@ $token = $provider->getAccessToken('client_credentials', ['target_id' => 'my_tar
 echo $token->getToken();
 ```
 
-### Example: Client Credentials Flow (Legacy Partner API)
-
-```php
-$provider = new Compwright\OAuth2\FieldEdge\ProviderFactory()->newLegacy(
-    clientId: '{fieldedge-client-id}',
-    apiKey: '{fieldedge-api-key}',
-);
-
-// Get an access token
-$token = $provider->getAccessToken('client_credentials');
-
-// Use the token to interact with an API on the users behalf
-echo $token->getToken();
-```
-
 ## Testing
 
 ```bash
 $ make test
 ```
+
+## Upgrading
+
+Please see [UPGRADING](https://github.com/compwright/oauth2-fieldedge/blob/master/UPGRADING.md) for instructions on upgrading from previous versions (1.x, 2.x).
 
 ## Contributing
 

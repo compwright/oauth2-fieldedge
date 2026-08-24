@@ -25,13 +25,16 @@
         "psr/http-message": "^2.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.89",
+        "friendsofphp/php-cs-fixer": "^3.95",
         "guzzlehttp/guzzle": "^7.15",
         "guzzlehttp/psr7": "^2.13",
         "league/oauth2-client": "^2.5",
-        "phpunit/phpunit": "^13.2",
-        "phpstan/phpstan": "^2.1"
+        "phpunit/phpunit": "^12.5 || ^13.3",
+        "phpstan/phpstan": "^2.2"
     },
+    "bin": [
+        "bin/fieldedge-client-credentials"
+    ],
     "autoload": {
         "psr-4": {
             "Compwright\\OAuth2\\FieldEdge\\": "src/"

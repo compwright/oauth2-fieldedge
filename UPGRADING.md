@@ -1,5 +1,15 @@
 # Upgrading
 
+## 2.x to 3.x
+
+Version 3.x drops support for the legacy FieldEdge partner API.
+
+### Removed
+
+* `ProviderFactory::newLegacy()`
+* `ProviderFactory::TOKEN_ENDPOINT_LEGACY`
+
+
 ## 1.x to 2.x
 
 Version 2.x represents a complete re-write which breaks from previous versions. The new implementation is simpler, relies on fewer dependencies, and leverages language features introduced in PHP 8.

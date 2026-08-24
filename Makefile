@@ -1,5 +1,5 @@
 test:
-	vendor/bin/phpstan analyse --level 9 src tests
+	vendor/bin/phpstan analyse --level 9 src tests bin
 	vendor/bin/phpunit tests
 
 style:

@@ -20,12 +20,14 @@ class ProviderTest extends TestCase
     {
         $client = $this->createStub(ClientInterface::class);
 
-        $provider = new ProviderFactory($client)->new(
+        $factory = new ProviderFactory($client);
+
+        $provider = $factory->new(
             clientId: 'mock_client_id',
             clientSecret: 'mock_secret',
         );
 
-        $this->expectExceptionMessageIsOrContains('Required parameter not passed: "target_id"');
+        $this->expectExceptionMessage('Required parameter not passed: "target_id"');
 
         $provider->getAccessToken('client_credentials');
     }
@@ -52,7 +54,9 @@ class ProviderTest extends TestCase
             )
         ;
 
-        $provider = new ProviderFactory($client)->new(
+        $factory = new ProviderFactory($client);
+
+        $provider = $factory->new(
             clientId: 'mock_client_id',
             clientSecret: 'mock_secret',
         );
@@ -60,39 +64,6 @@ class ProviderTest extends TestCase
         $token = $provider->getAccessToken('client_credentials', [
             'target_id' => 'mock_target_id',
         ]);
-
-        $this->assertEquals('mock_access_token', $token->getToken());
-    }
-
-    public function testLegacyProvider(): void
-    {
-        $client = $this->createMock(ClientInterface::class);
-        $client->expects($this->once())
-            ->method('send')
-            ->with($this->callback(function (RequestInterface $request): bool {
-                $body = (string) $request->getBody();
-
-                return
-                    'POST' === $request->getMethod()
-                    && ProviderFactory::TOKEN_ENDPOINT_LEGACY === (string) $request->getUri()
-                    && 'grant_type=client_credentials' === $body
-                    && 'Basic '.base64_encode('mock_client_id:mock_secret') === $request->getHeaderLine('authorization');
-            }))
-            ->willReturn(
-                new Response(
-                    200,
-                    ['content-type' => 'application/json'],
-                    '{"access_token":"mock_access_token"}'
-                )
-            )
-        ;
-
-        $provider = new ProviderFactory($client)->newLegacy(
-            clientId: 'mock_client_id',
-            apiKey: 'mock_secret',
-        );
-
-        $token = $provider->getAccessToken('client_credentials');
 
         $this->assertEquals('mock_access_token', $token->getToken());
     }

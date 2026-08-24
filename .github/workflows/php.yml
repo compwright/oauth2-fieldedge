@@ -1,0 +1,44 @@
+name: All Tests
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest]
+        php-versions: ['8.3', '8.4', '8.5']
+
+    runs-on: ${{ matrix.operating-system }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v7
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-versions }}
+        tools: composer
+
+    - name: Setup problem matchers for PHP
+      run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+
+    - name: Setup problem matchers for PHPUnit
+      run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+    - name: Run composer install
+      run: composer install -n --prefer-dist
+
+    - name: phpstan
+      run: vendor/bin/phpstan analyze --level 9 src tests bin
+
+    - name: phpunit
+      run: vendor/bin/phpunit --display-all-issues tests
