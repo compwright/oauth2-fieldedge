@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/compwright/oauth2-fieldedge/compare/v3.0.0...v3.0.1) (2026-08-24)
+
+
+### Bug Fixes
+
+* Improve fieldedge-client-credentials bin script error handling ([f6ba483](https://github.com/compwright/oauth2-fieldedge/commit/f6ba48367592921b7111626dae41c3d1b1567c2a))
+
 ## [3.0.0](https://github.com/compwright/oauth2-fieldedge/compare/v2.0.0...v3.0.0) (2026-08-24)
 
 
